@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 
 import action.Wrapper;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -60,6 +61,7 @@ public class Diary extends Wrapper {
 	{
 		Thread.sleep(3000);
 		click("//button[@ng-click='saveDiaryEvent()']");
+		//click("//span[//*[@id=\"side-panel\"]/section[1]/div/form/div[2]/div/button/span[1]]");
 	}
 	
 	public void Diary_Timing()
@@ -82,7 +84,7 @@ public class Diary extends Wrapper {
 	{
 		type("//input[@name='description']", "Normal Event");
 	}
-	public void Diary_Save()  //used to clik on save button on create diary event side panel
+	public void Diary_Save()  //used to click on save button on create diary event side panel
 	{
 		click("(//span[text()='Save'])[2]");
 	}
@@ -172,15 +174,17 @@ public class Diary extends Wrapper {
 		
 	}
 	
-	public void Diary_job_AddProperty()
+	public void Diary_job_Add_Property()
 	{
-		click("//*[@id=\"page-panel-main\"]/div[2]/div/section[1]/section[2]/div/div/div[2]/a");
-		//click("//a[@ng-click='addNewProperty(event_type)']");
+		//click("//*[@id=\"page-panel-main\"]/div[2]/div/section[1]/section[2]/div/div/div[2]/a");
+		click("//a[@ng-click='addNewProperty(event_type)']");
+		
 	}
-	public void Diary_TypesOfProperty()
+	public void Diary_TypesOfProperty_Customer()
 	{
 		selectdropdown("//select[@id='new-property-type-input']","Customer");
 	}
+
 	public void Diary_TypesOfCustomer()
 	{
 		selectdropdownvalue("//select[@ng-change='setCustomerType()']","0");
@@ -195,7 +199,7 @@ public class Diary extends Wrapper {
 	}
 	public void Diary_AddProperty_CustomerName()
 	{
-		type("//input[@ng-model='add_new_customer_inputs.first_name']",name("Ranjit-"));
+		type("//input[@ng-model='add_new_customer_inputs.first_name']",name("Customer-"));
 	}
 	public void Diary_AddProperty_CustomerSurName()
 	{
@@ -217,15 +221,116 @@ public class Diary extends Wrapper {
 	{
 		type("//input[@ng-model='add_new_customer_inputs.addrs_1']","Madurai");
 	}
-	public void Diary_AddProperty_CustomerAdd1(String Email)
+	public void Diary_AddProperty_CustomerAdd1(String addrs1)
 	{
-		type("//input[@ng-model='add_new_customer_inputs.addrs_1']",Email);
+		type("//input[@ng-model='add_new_customer_inputs.addrs_1']",addrs1);
 	}
 	public void Diary_AddProperty_CustomerSave() throws InterruptedException
 	{
 		click("//button[@ng-show=\"selected_customer_type == 'new_customer'\"]");
 		Thread.sleep(15000);
 	}
+	
+	//*******Work address adding in diary screen*****
+	
+	public void Diary_TypesOfProperty_WorkAddress()
+	{
+		selectdropdown("//select[@id='new-property-type-input']","Work address");
+	}
+	
+	
+	public void Diary_SearchCustomer_Add_WorkAddress()
+	{
+		click("//span[@//*[@id=\"s2id_selectCustomer\"]/a/span[1]");
+		type("//input[@id=\"select2-drop\"]/div/input","Bala-");
+		click("//span[@id=\"select2-drop\"]/ul/li[1]/div/span");
+	}
+	public String wa_name(String wa_name)
+	{
+		 SimpleDateFormat timeformat = new SimpleDateFormat("hh-mm");
+		 Time time = new Time(totalTime);
+		 String time1= timeformat.format(time);
+		 wa_name = wa_name + time1;
+		return wa_name;
+	}
+	public void Diary_AddProperty_WAName()
+	{
+		type("//input[@ng-model='add_new_work_address_inputs.first_name']",wa_name("work-"));
+	}
+	public void Diary_AddProperty_WASurName()
+	{
+		type("//input[@ng-model='add_new_work_address_inputs.surname']","Diary");
+	}
+	public void Diary_AddProperty_WASurName(String Surname)
+	{
+		type("//input[@ng-model='add_new_work_address_inputs.surname']",Surname);
+	}
+	public void Diary_AddProperty_WAEmail()
+	{
+		type("//input[@ng-model='add_new_work_address_inputs.email']","workaddress@commusoft.com");
+	}
+	public void Diary_AddProperty_WAEmail(String Email)
+	{
+		type("//input[@ng-model='add_new_work_address_inputs.email']",Email);
+	}
+	public void Diary_AddProperty_WAAdd1()
+	{
+		type("//input[@ng-model='add_new_work_address_inputs.addrs_1']","Trafalgar Sq");
+	}
+	public void Diary_AddProperty_WAAdd1(String address1)
+	{
+		type("//input[@ng-model='add_new_work_address_inputs.addrs_1']",address1);
+	}
+	public void Diary_AddProperty_WAAdd2()
+	{
+		type("//input[@ng-model='add_new_work_address_inputs.addrs_2']","London");
+	}
+	public void Diary_AddProperty_WAAdd2(String address2)
+	{
+		type("//input[@ng-model='add_new_work_address_inputs.addrs_2']",address2);
+	}
+	public void Diary_AddProperty_WASave() throws InterruptedException
+	{
+		click("//button[@ng-show=\"selected_property_type == 'work_address'\"]");
+		Thread.sleep(15000);
+	}
+	
+	//*********Adding company in diary screen ******//
+	
+	
+	
+	
+	public void Diary_TypesOfCompany()
+	{
+		selectdropdownvalue("//select[@ng-change='setCustomerType()']","1");
+	}
+	public String companyname(String companyname)
+	{
+		 DateFormat dateFormat = new SimpleDateFormat("dd-MM");
+		 Date date = new Date();
+		 String date1= dateFormat.format(date);
+		 companyname = companyname + date1;
+		return companyname;
+	}
+	public void Diary_AddProperty_CompanyName()
+	{
+		type("//input[@ng-model='add_new_company_inputs.company_name']",companyname("company-"));
+	}
+	public void Diary_AddProperty_CompanyAdd1()
+	{
+		type("//input[@ng-model='add_new_company_inputs.addrs_1']","Greater london");
+	}
+	public void Diary_AddProperty_CompanyAdd1(String addrs1)
+	{
+		type("//input[@ng-model='add_new_company_inputs.addrs_1']",addrs1);
+	}
+	public void Diary_AddProperty_CompanySave() throws InterruptedException
+	{
+		click("//button[@ng-show=\"selected_customer_type == 'new_company'\"]");
+		Thread.sleep(15000);
+	}
+	
+	
 	public void Diary_PrintJobSheet() throws InterruptedException
 	{
 		click("//span[text()='Print job sheets']");
