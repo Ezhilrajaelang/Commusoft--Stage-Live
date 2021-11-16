@@ -8,9 +8,11 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.Status;
 import action.Baseclass;
 import pages.Company;
+import pages.CreateJob;
 import pages.Customer;
 import pages.Diary;
 import pages.Editcustomer_workaddress;
+import pages.Invoice;
 import pages.LoginPage;
 import pages.Property_search;
 import pages.Reporting;
@@ -53,6 +55,7 @@ public class CustomerWA extends Baseclass {
 	public void Customer_Add() throws InterruptedException
 	{
 		Customer customer = new Customer(driver);
+		Property_search searchcustomer = new Property_search(driver);
 		customer.Customer_create();
 		customer.Customer_title();
 		customer.Customer_Name();
@@ -62,6 +65,7 @@ public class CustomerWA extends Baseclass {
 		customer.Customer_AddressLine1();
 		customer.Customer_Save();
 		Thread.sleep(20000);
+		searchcustomer.Customer_AccountNo();
 		customerpage = driver.getCurrentUrl();
 	}
 	@Test(priority = 3)
@@ -97,10 +101,12 @@ public class CustomerWA extends Baseclass {
 		driver.get(customerpage);
 		Thread.sleep(20000);
 		Customer customer = new Customer(driver);
+		Property_search searchcustomer = new Property_search(driver);
 		customer.workaddress_tab();
 		customer.workaddress_addnewWorkaddress();
 		customer.Workaddress_create();
 		Thread.sleep(20000);
+		searchcustomer.WorkAddress_AccountNo();
 		WApage = driver.getCurrentUrl();
 
 	}
@@ -138,9 +144,11 @@ public class CustomerWA extends Baseclass {
 	public void Company_Add() throws InterruptedException
 	{
 		Company company = new Company(driver);
+		Property_search searchcustomer = new Property_search(driver);
 		click("//a[text()='Customers']");
 		company.Company_AddCompany();//Company without contact
 		Thread.sleep(20000);
+		searchcustomer.Company_AccountNo();
 		Companypage = driver.getCurrentUrl();
 	}
 	@Test(priority = 9)
@@ -151,6 +159,7 @@ public class CustomerWA extends Baseclass {
 		Thread.sleep(20000);
 		company.Company_EditCompany();//Company without contact
 		Thread.sleep(20000);
+		
 		companypage = driver.getCurrentUrl();
 	}
 	@Test(priority = 10)
@@ -216,6 +225,7 @@ public class CustomerWA extends Baseclass {
 	{
 		Thread.sleep(20000);
 		Customer customer = new Customer(driver);
+		Property_search searchcustomer = new Property_search(driver);
 		click("//a[text()='Customers']");
 		customer.Customer_create();
 		customer.Customer_title();
@@ -230,6 +240,7 @@ public class CustomerWA extends Baseclass {
 		customer.workaddress_addnewWorkaddress();
 		customer.Workaddress_as_company_create();
 		Thread.sleep(20000);
+		searchcustomer.WAasCompany_AccountNo();
 		WA_as_Company = driver.getCurrentUrl();
 
 	}
@@ -318,7 +329,7 @@ public class CustomerWA extends Baseclass {
 		//diary.Diary_AddProperty_CloseSidepanel();
 		Thread.sleep(6000);
 	}*/
-	@Test(priority = 19)
+	/*@Test(priority = 19)
 	public void Add_Company_diary() throws InterruptedException
 	{
 		//Add Company in diary screen and add job
@@ -366,8 +377,8 @@ public class CustomerWA extends Baseclass {
 		click("//span[text()='Add phone number']");
 		click("//span[text()='Add contact']");
 
-	}
-	@Test(priority = 21)
+	}*/
+	/*@Test(priority = 21)
 	public  void WorkAddress_CreateContact() throws InterruptedException
 	{
 		driver.get(WApage);
@@ -407,7 +418,45 @@ public class CustomerWA extends Baseclass {
 		click("//span[text()='Add contact']");
 
 	}
+	@Test(priority = 1)
+	public  void Customer_Allow_Delete() throws InterruptedException
+	{
+		click("//a[text()='Customers']");
+		Customer customer = new Customer(driver);
+		customer.Customer_create();
+		customer.Customer_title();
+		customer.Customer_Name();
+		customer.Customer_SurName();
+		customer.Customer_Mobile();
+		customer.Customer_email();
+		customer.Customer_AddressLine1();
+		customer.Customer_Save();
+		Thread.sleep(6000);
+		customer.Customer_Quicklinks();
+		customer.Customer_Delete();
+		Thread.sleep(6000);
+		customer.Customer_Allow_Delete();
+		
+	}*/
 	@Test(priority = 23)
+	public  void Customer_Notallow_Delete() throws InterruptedException
+	{
+		
+		Customer customer = new Customer(driver);
+		CreateJob job = new CreateJob(driver);
+		driver.get("https://stage2.commusoft.net/customers/customer_list/1712/view/property/view");
+		job.addjob();
+		job.JobDescription("PreFinal");
+		Thread.sleep(4000);
+		driver.get("https://stage2.commusoft.net/customers/customer_list/1712/view/property/view");
+		Thread.sleep(6000);
+		customer.Customer_Quicklinks();
+		customer.Customer_Delete();
+		Thread.sleep(6000);
+		customer.Customer_Not_Allow_Delete();
+		
+	}
+	/*@Test(priority = 23)
 	public void CustomerReports() throws InterruptedException
 	{
 		
@@ -438,7 +487,7 @@ public class CustomerWA extends Baseclass {
 		Report.apply_filter();
 		Report.First_Plus_button();
 		Report.Click_View_workaddres();
-	}
+	}*/
 	
 }
 	
